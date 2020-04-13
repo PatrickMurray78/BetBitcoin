@@ -1,10 +1,18 @@
 <ion-header translucent="true" no-border>
   <ion-toolbar>
     <img id="logo" src="../../assets/images/logo.png">
-    <ion-button size="large" slot="end" fill="outline" color="light">Login</ion-button>
-    <ion-button id="signup" size="large" slot="end" color="success">Signup</ion-button>
+    <ion-button [routerLink]="['/login']" size="large" slot="end" fill="outline" color="light">Login</ion-button>
+    <ion-button [routerLink]="['/signup']" size="large" slot="end" color="success">Signup</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div id="title-container">
+      <ion-label class="title-text">The funnest way to bet with bitcoin</ion-label>
+      <br><br>
+      <ion-label class="ion-text-wrap double-size" color="medium">
+        One-click sign up and a simple funding process mean you
+        can start bitcoin betting in just five minutes.
+      </ion-label>
+    </div>
 </ion-content>

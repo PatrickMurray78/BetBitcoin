@@ -42,3 +42,23 @@ ion-content {
 #logo {
   float: left;
 }
+
+#title-container {
+  width: 60vw;
+  height: 30vh;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  color: white;
+  text-align: center;
+}
+
+.title-text {
+  font-size: 300%;
+  font-weight: bold;
+}
+
+.double-size {
+  font-size: 200%;
+}
