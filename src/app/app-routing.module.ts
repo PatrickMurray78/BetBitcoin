@@ -12,14 +12,6 @@ const routes: Routes = [
     path: 'betbitcoin',
     loadChildren: () => import('./betbitcoin/betbitcoin.module').then( m => m.BetbitcoinPageModule)
   },
-  {
-    path: 'auth/login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'auth/signup',
-    loadChildren: () => import('./auth/signup/signup.module').then( m => m.SignupPageModule)
-  },
 ];
 
 @NgModule({
