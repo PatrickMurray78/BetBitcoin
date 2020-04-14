@@ -5,10 +5,6 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },
-  {
     path: 'account',
     loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
   },
@@ -17,8 +13,12 @@ const routes: Routes = [
     loadChildren: () => import('./betbitcoin/betbitcoin.module').then( m => m.BetbitcoinPageModule)
   },
   {
-    path: 'signup',
-    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+    path: 'auth/login',
+    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'auth/signup',
+    loadChildren: () => import('./auth/signup/signup.module').then( m => m.SignupPageModule)
   },
 ];
 
