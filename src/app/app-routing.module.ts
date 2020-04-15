@@ -13,12 +13,16 @@ const routes: Routes = [
     loadChildren: () => import('./betbitcoin/betbitcoin.module').then( m => m.BetbitcoinPageModule)
   },
   {
-    path: 'signup',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+    path: 'signup',
+    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
 ];
 
