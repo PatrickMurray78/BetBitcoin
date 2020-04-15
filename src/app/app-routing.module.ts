@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./betbitcoin/betbitcoin.module').then( m => m.BetbitcoinPageModule)
   },
   {
-    path: 'register',
+    path: 'signup',
     loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
   },
 ];
