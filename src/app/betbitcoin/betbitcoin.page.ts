@@ -99,8 +99,26 @@ export class BetbitcoinPage implements OnInit {
     this.service.GetBtcData().subscribe(
       (data) => {
         this.btcData = data;
-        //this.updateSeries();
+        this.updateSeries();
       }); 
+  }
+
+  public updateSeries() {
+    let count = 0;
+    var series = [
+      { data: [] },
+    ];
+    for(let i = 10; i >= 0; i--)
+    {
+      this.newData = this.btcData[i+1];
+      series[0].data[count] = {
+        x: new Date(this.newData[0]),
+        y: [this.newData[1], this.newData[2], this.newData[3], this.newData[4]]
+      }
+      count++;
+    }
+    this.chartOptions.series = series;
+    console.log(this.chartOptions.series[0]);
   }
 
   public generateDayWiseTimeSeries(baseval, count, yrange) {
