@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { BetbitcoinPageRoutingModule } from './betbitcoin-routing.module';
 
 import { BetbitcoinPage } from './betbitcoin.page';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgApexchartsModule,
     BetbitcoinPageRoutingModule
   ],
   declarations: [BetbitcoinPage]
