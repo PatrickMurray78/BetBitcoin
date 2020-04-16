@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { MenuController } from '@ionic/angular';
+import { BtcService } from '../Services/btc-service.service';
 import { interval } from 'rxjs';
 import { formatDate } from '@angular/common';
 
@@ -11,7 +12,6 @@ import {
   ApexYAxis,
   ApexXAxis,
   ApexTitleSubtitle
-  //NgApexchartsModule
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -41,7 +41,7 @@ export class BetbitcoinPage implements OnInit {
   name:string;
   balance: number;
 
-  constructor(public storage: Storage, private menu: MenuController) {
+  constructor(public storage: Storage, private menu: MenuController, private service: BtcService) {
     this.chartOptions = {
       series: [{
         data: []
@@ -74,6 +74,7 @@ export class BetbitcoinPage implements OnInit {
   subscribe = this.source.subscribe(val => this.secondTracker());
 
   ngOnInit() {
+    this.getData();
     this.storage.get("loggedIn")
       .then((data) => {
           this.user = data;
@@ -89,9 +90,17 @@ export class BetbitcoinPage implements OnInit {
     console.log(this.time);
     if(this.time % 60 == 0)
     {
-      //this.getData();
+      this.getData();
     }
 
+  }
+
+  getData() {
+    this.service.GetBtcData().subscribe(
+      (data) => {
+        this.btcData = data;
+        //this.updateSeries();
+      }); 
   }
 
   public generateDayWiseTimeSeries(baseval, count, yrange) {
