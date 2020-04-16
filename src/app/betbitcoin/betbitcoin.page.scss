@@ -1,0 +1,35 @@
+ion-header {
+    overflow: hidden;
+}
+
+ion-toolbar {
+    --background: #000033;
+}
+
+ion-content {
+    --background: #000033;
+}
+
+ion-menu-button {
+    margin-right: 10vw;
+    color: white;
+}
+
+.my-custom-menu {
+    --width: 200px;
+  }
+
+#menuToolbar {
+    --background: #000033;
+    color: white;
+}
+
+#balance {
+    --background: white;
+    border-radius: 25px;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    float: right;
+    margin-top: 30px;
+}

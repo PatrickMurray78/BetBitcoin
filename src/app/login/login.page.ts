@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
               {
                 console.log("Logging in user");
                 this.users[i].loggedIn = 1;
-                this.storage.set("user", this.users)
+                this.storage.set("loggedIn", this.users[i])
                  .then(
                     ()=> {
                       this.printDatabase();

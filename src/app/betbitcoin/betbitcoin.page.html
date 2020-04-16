@@ -1,9 +1,26 @@
-<ion-header>
+<ion-header translucent="true" no-border>
   <ion-toolbar>
-    <ion-title>betbitcoin</ion-title>
+    <img id="logo" src="../../assets/images/logo.png">
+    <ion-item id="balance" justify>
+      <ion-label>${{balance}}.00</ion-label>
+    </ion-item>
+    <ion-menu-button slot="end"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-menu side="end" menuId="custom" contentId="main" class="my-custom-menu">
+    <ion-header>
+      <ion-toolbar id="menuToolbar">
+        <ion-title>{{name}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>Account</ion-item>
+        <ion-item>Sign Out</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-content>
