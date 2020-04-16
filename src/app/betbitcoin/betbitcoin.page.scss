@@ -7,11 +7,16 @@ ion-toolbar {
 }
 
 ion-content {
+    text-align: center;
     --background: #000033;
 }
 
 ion-menu-button {
     margin-right: 10vw;
+    color: white;
+}
+
+ion-label {
     color: white;
 }
 
@@ -32,4 +37,49 @@ ion-menu-button {
     text-align: center;
     float: right;
     margin-top: 30px;
+}
+
+#chart {
+    margin-top: 30px;
+    background-color: white;
+    width: 80vw;
+    display: inline-block;
+    border: 3px solid #ff6600;
+}
+
+#countdown {
+    text-align: center;
+    --background: #000033;
+    color: white;
+}
+
+#betContainer {
+    position: absolute;
+    left: 35%;
+    //background-color: red;
+    width: 30vw;
+    height: 40vh;
+}
+
+#amount {
+    display: inline-block;
+    width: 20vw;
+}
+
+
+#currentBetsContainer {
+    display: block;
+    width: 30vw;
+    height: 40vh;
+    //background-color: saddlebrown;
+    float: right;
+    //opacity: 1;
+}
+
+#bet {
+    --background: #000033;
+    color: white;
+    border-radius: 25px;
+    border: 1px solid #ff6600;
+    width: 250px;
 }

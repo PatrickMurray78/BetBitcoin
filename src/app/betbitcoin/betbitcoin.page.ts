@@ -40,6 +40,11 @@ export class BetbitcoinPage implements OnInit {
   user: any;
   name:string;
   balance: number;
+  seconds: number;
+  amount: number;
+  myBet: any;
+  choice: number;
+  currentBet: number;
 
   constructor(public storage: Storage, private menu: MenuController, private service: BtcService) {
     this.chartOptions = {
@@ -74,6 +79,7 @@ export class BetbitcoinPage implements OnInit {
   subscribe = this.source.subscribe(val => this.secondTracker());
 
   ngOnInit() {
+    document.getElementById("currentBetsContainer").style.opacity = "0";
     this.getData();
     this.storage.get("loggedIn")
       .then((data) => {
@@ -87,8 +93,8 @@ export class BetbitcoinPage implements OnInit {
   secondTracker()
   {
     this.time = new Date().getSeconds();
-    console.log(this.time);
-    if(this.time % 60 == 0)
+    this.seconds = 60 - this.time;
+    if(this.time % 61 == 0)
     {
       this.getData();
     }
@@ -119,6 +125,8 @@ export class BetbitcoinPage implements OnInit {
     }
     this.chartOptions.series = series;
     console.log(this.chartOptions.series[0]);
+    this.checkBet();
+    
   }
 
   public generateDayWiseTimeSeries(baseval, count, yrange) {
@@ -133,5 +141,45 @@ export class BetbitcoinPage implements OnInit {
       i++;
     }
     return series;
+  }
+
+  bet(choice:number)
+  {
+    this.choice = choice;
+    this.balance -= this.amount;
+    this.currentBet = this.amount * 2;
+    document.getElementById("currentBetsContainer").style.opacity = "1";
+  }
+
+  checkBet()
+  {
+    if(this.newData[1] < this.newData[4])
+    {
+      if(this.choice == 0)
+      {
+        this.amount *= 2;
+        this.balance += this.amount;
+      }
+      else {
+        console.log("You lost");
+      }
+    }
+    else {
+      if(this.choice == 1)
+      {
+        this.amount *= 2;
+        this.balance += this.amount;
+      }
+      else {
+        console.log("You lost");
+      }
+    }
+    document.getElementById("currentBetsContainer").style.opacity = "0";
+    this.user.dollar = this.balance;
+    this.storage.set("loggedIn", this.user)
+      .then((data) => {
+        })
+      .catch();
+    
   }
 }
