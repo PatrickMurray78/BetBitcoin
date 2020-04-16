@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, ɵNgNoValidate } from "@angular/forms";
 import { Storage } from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 
@@ -19,6 +19,8 @@ export class SignupPage implements OnInit {
   ngOnInit() {
     this.printDatabase();
     this.ionicForm = this.formBuilder.group({
+      loggedIn: [''],
+      dollar: [''],
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       dob: [this.defaultDate],
@@ -37,12 +39,14 @@ export class SignupPage implements OnInit {
   return this.ionicForm.controls;
   }
 
-submitForm() {
+submitForm(value: any) {
   this.isSubmitted = true;
   if (!this.ionicForm.valid) {
     console.log('Please provide all the required values!')
     return false;
   } else {
+    value.loggedIn = 0;
+    value.dollar = 50000;
     this.saveForm();
   }
  }
@@ -50,12 +54,13 @@ submitForm() {
  saveForm() {
   this.storage.get("user")
       .then((data) => {
-        console.log(data);
+        if(data != null) {
           this.users = data;
-          console.log(this.users);
-          console.log(this.ionicForm.value);
           this.users.push(this.ionicForm.value);
-          console.log(this.users);
+        }
+        else {
+          this.users[0] = this.ionicForm.value;
+        }
           this.storage.set("user", this.users)
             .then(
               ()=> {
@@ -70,7 +75,13 @@ submitForm() {
   {
     this.storage.get("user")
       .then((data) => {
-          console.log(data);
+          if(data == null)
+          {
+            console.log("Database Empty!")
+          }
+          else {
+            console.log(data);
+          }
         })
       .catch();
   }
