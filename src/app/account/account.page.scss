@@ -9,4 +9,20 @@ ion-toolbar {
 
 ion-content {
     --background: #000033;
+    text-align: center;
+}
+
+#accountContainer {
+    display: inline-block;
+    background-color: white;
+    width: 80vw;
+    height: 60vh;
+    margin-top: 5vh;
+    border: 2px solid #ff6600;
+    border-radius: 25px;
+}
+
+#bet {
+    --background: #ff6600;
+    color: white;
 }

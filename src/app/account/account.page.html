@@ -5,5 +5,29 @@
 </ion-header>
 
 <ion-content>
-
+  <div id="accountContainer">
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-label>{{name}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-label>{{email}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-label>{{password}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date of birth</ion-label>
+      <ion-label>{{dob}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Balance</ion-label>
+      <ion-label>{{balance}}</ion-label>
+    </ion-item>
+    <ion-button>Edit</ion-button>
+  </div>
+  <br>
+  <ion-button [routerLink]="['/betbitcoin']" id="bet" shape="round" size="large">BET</ion-button>
 </ion-content>
