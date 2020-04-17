@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { BtcService } from '../Services/btc-service.service';
 import { interval } from 'rxjs';
 import { formatDate } from '@angular/common';
+import { NavController } from '@ionic/angular';
 
 import {
   ChartComponent,
@@ -46,7 +47,7 @@ export class BetbitcoinPage implements OnInit {
   choice: number;
   currentBet: number;
 
-  constructor(public storage: Storage, private menu: MenuController, private service: BtcService) {
+  constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController) {
     this.chartOptions = {
       series: [{
         data: []
@@ -181,5 +182,14 @@ export class BetbitcoinPage implements OnInit {
         })
       .catch();
     
+  }
+
+  signOut() {
+    this.user.loggedIn = 0;
+    this.storage.set("loggedIn", this.user)
+      .then((data) => {
+        })
+      .catch();
+      this.navCtrl.navigateBack('/home');
   }
 }
