@@ -8,26 +8,26 @@
   <div id="accountContainer">
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
-      <ion-input id="name" readonly="{{isReadOnly}}" placeholder="{{name}}"></ion-input>
+      <ion-input [(ngModel)]="name" readonly="{{isReadOnly}}" placeholder="{{name}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Email</ion-label>
-      <ion-input id="email" readonly="{{isReadOnly}}" placeholder="{{email}}"></ion-input>
+      <ion-input [(ngModel)]="email" readonly="{{isReadOnly}}" placeholder="{{email}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Password</ion-label>
-      <ion-input id="password" readonly="{{isReadOnly}}" placeholder="{{password}}"></ion-input>
+      <ion-input [(ngModel)]="password" readonly="{{isReadOnly}}" placeholder="{{password}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Date of birth</ion-label>
-      <ion-input id="dob" readonly="{{isReadOnly}}" placeholder="{{dob}}"></ion-input>
+      <ion-input [(ngModel)]="dob" readonly="{{isReadOnly}}" placeholder="{{dob}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Balance</ion-label>
       <ion-input readonly placeholder="{{balance}}"></ion-input>
     </ion-item>
-    <ion-button (click)="edit()">Edit</ion-button>
-    <ion-button disabled>Save Changes</ion-button>
+    <ion-button (click)="edit()" disabled="{{editDisabled}}">Edit</ion-button>
+    <ion-button (click)="saveChanges()" disabled="{{saveDisabled}}">Save Changes</ion-button>
   </div>
   <br>
   <ion-button [routerLink]="['/betbitcoin']" id="bet" shape="round" size="large">BET</ion-button>

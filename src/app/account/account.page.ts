@@ -15,7 +15,8 @@ export class AccountPage implements OnInit {
   dob: any;
   balance: number;
   isReadOnly: boolean = true;
-
+  editDisabled: boolean = false;
+  saveDisabled: boolean = true;
 
   constructor(public storage: Storage) { }
 
@@ -34,6 +35,22 @@ export class AccountPage implements OnInit {
 
   edit() {
    this.isReadOnly = false;
+   this.editDisabled = true;
+   this.saveDisabled = false;
+  }
+
+  saveChanges() {
+    this.user.name = this.name;
+    this.user.email = this.email;
+    this.user.password = this.password;
+    this.user.dob = this.dob;
+    this.storage.set("loggedIn", this.user)
+      .then(() => {
+        })
+      .catch();
+      this.isReadOnly = true;
+      this.editDisabled = false;
+      this.saveDisabled = true;
   }
 
 }
