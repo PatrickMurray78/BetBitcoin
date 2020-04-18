@@ -26,6 +26,7 @@
       <ion-label position="stacked">Balance</ion-label>
       <ion-input readonly placeholder="{{balance}}"></ion-input>
     </ion-item>
+    <ion-button (click)="resetAccount()">Reset Account</ion-button>
     <ion-button (click)="edit()" disabled="{{editDisabled}}">Edit</ion-button>
     <ion-button (click)="saveChanges()" disabled="{{saveDisabled}}">Save Changes</ion-button>
   </div>

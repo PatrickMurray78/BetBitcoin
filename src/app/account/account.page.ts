@@ -53,4 +53,8 @@ export class AccountPage implements OnInit {
       this.saveDisabled = true;
   }
 
+  resetAccount() {
+    this.user.balance = 50000;
+  }
+
 }
