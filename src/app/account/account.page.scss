@@ -20,9 +20,16 @@ ion-content {
     margin-top: 5vh;
     border: 2px solid #ff6600;
     border-radius: 25px;
+    padding-top: 20px;
+    padding-right: 5px;
 }
 
 #bet {
     --background: #ff6600;
     color: white;
+}
+
+ion-input{
+    --placeholder-color: black;
+    --placeholder-opacity: 1;
 }

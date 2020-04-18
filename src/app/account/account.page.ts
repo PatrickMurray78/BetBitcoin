@@ -14,6 +14,7 @@ export class AccountPage implements OnInit {
   password: any;
   dob: any;
   balance: number;
+  isReadOnly: boolean = true;
 
 
   constructor(public storage: Storage) { }
@@ -27,10 +28,12 @@ export class AccountPage implements OnInit {
           this.password = data.password;
           this.dob = data.dob;
           this.balance = data.dollar;
-          //this.name = this.user.name;
-          //this.balance = this.user.dollar;
         })
       .catch();
+  }
+
+  edit() {
+   this.isReadOnly = false;
   }
 
 }
