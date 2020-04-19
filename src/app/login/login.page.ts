@@ -33,8 +33,6 @@ export class LoginPage implements OnInit {
       console.log('Please provide all the required values!')
       return false;
     } else {
-      console.log(value.email);
-	    console.log(value.password);
       this.login();
     }
    }

@@ -20,7 +20,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Date of birth</ion-label>
-      <ion-input [(ngModel)]="dob" readonly="{{isReadOnly}}" placeholder="{{dob}}"></ion-input>
+      <ion-datetime (ionChange)="getDate($event)" [(ngModel)]="dob" placeholder="{{dob}}" readonly="{{isReadOnly}}"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Balance</ion-label>

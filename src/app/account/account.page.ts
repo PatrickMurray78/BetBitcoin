@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 })
 export class AccountPage implements OnInit {
 
+  accountNum: number;
   user: any;
   name: string;
   email: any;
@@ -25,6 +26,7 @@ export class AccountPage implements OnInit {
       .then((data) => {
         console.log(data);
           this.user = data;
+          this.accountNum = data.accountNum;
           this.name = data.name;
           this.email = data.email;
           this.password = data.password;
@@ -34,10 +36,16 @@ export class AccountPage implements OnInit {
       .catch();
   }
 
+  getDate(e) {
+    let date = new Date(e.target.value).toISOString().substring(0, 10);
+    this.dob = date;
+    console.log(this.dob);
+  }
+
   edit() {
-   this.isReadOnly = false;
-   this.editDisabled = true;
-   this.saveDisabled = false;
+    this.isReadOnly = false;
+    this.editDisabled = true;
+    this.saveDisabled = false;
   }
 
   saveChanges() {
@@ -52,7 +60,7 @@ export class AccountPage implements OnInit {
           let users: any = data;
           for(let i = 0; i < users.length; i++)
           {
-            if(users[i].email == this.email)
+            if(users[i].accountNum == this.accountNum)
             {
               users[i] = this.user;
               this.storage.set("user", users)
