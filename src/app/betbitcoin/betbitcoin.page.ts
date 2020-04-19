@@ -5,6 +5,7 @@ import { BtcService } from '../Services/btc-service.service';
 import { interval } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { NavController } from '@ionic/angular';
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 import {
   ChartComponent,
@@ -47,7 +48,7 @@ export class BetbitcoinPage implements OnInit {
   choice: number;
   currentBet: number;
 
-  constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController) {
+  constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController, private vibration: Vibration) {
     this.chartOptions = {
       series: [{
         data: []
@@ -146,6 +147,7 @@ export class BetbitcoinPage implements OnInit {
 
   bet(choice:number)
   {
+    this.vibration.vibrate(1000);
     this.choice = choice;
     this.balance -= this.amount;
     this.currentBet = this.amount * 2;
@@ -154,6 +156,7 @@ export class BetbitcoinPage implements OnInit {
 
   checkBet()
   {
+    //this.vibration.vibrate([2000, 1000, 2000]);
     if(this.newData[1] < this.newData[4])
     {
       if(this.choice == 0)

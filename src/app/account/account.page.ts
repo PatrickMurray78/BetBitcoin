@@ -23,6 +23,7 @@ export class AccountPage implements OnInit {
   ngOnInit() {
    this.storage.get("loggedIn")
       .then((data) => {
+        console.log(data);
           this.user = data;
           this.name = data.name;
           this.email = data.email;
@@ -46,6 +47,22 @@ export class AccountPage implements OnInit {
     this.user.dob = this.dob;
     this.storage.set("loggedIn", this.user)
       .then(() => {
+        this.storage.get("user")
+        .then((data) => {
+          let users: any = data;
+          for(let i = 0; i < users.length; i++)
+          {
+            if(users[i].email == this.email)
+            {
+              users[i] = this.user;
+              this.storage.set("user", users)
+              .then(() => {
+              })
+              .catch();
+            }
+          }
+        })
+        .catch();
         })
       .catch();
       this.isReadOnly = true;
