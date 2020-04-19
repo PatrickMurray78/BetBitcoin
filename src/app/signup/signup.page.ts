@@ -13,18 +13,21 @@ export class SignupPage implements OnInit {
   defaultDate = "1987-06-30";
   isSubmitted = false;
   users = [];
+  accountNum: any;
 
   constructor(public formBuilder: FormBuilder, private storage: Storage, private navCtrl: NavController) { }
 
   ngOnInit() {
     this.printDatabase();
     this.ionicForm = this.formBuilder.group({
+      accountNum: [''],
       dollar: [''],
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       dob: [this.defaultDate],
       password: ['', [Validators.required, Validators.minLength(8)]]
     })
+    this.getAccountNum();
   }
 
   getDate(e) {
@@ -45,6 +48,7 @@ submitForm(value: any) {
     return false;
   } else {
     value.dollar = 50000;
+    value.accountNum = this.accountNum;
     this.saveForm();
   }
  }
@@ -82,5 +86,28 @@ submitForm(value: any) {
           }
         })
       .catch();
+  }
+
+  getAccountNum() {
+    this.storage.get("accountNum")
+    .then((data) => {
+      if(data == null)
+      {
+        this.storage.set("accountNum", 1)
+        .then(() => {
+          console.log("No numbers yet");
+          this.accountNum = 1;
+        })
+        .catch();
+      }
+      else {
+        this.accountNum = data + 1;
+        this.storage.set("accountNum", this.accountNum)
+        .then(() => {
+        })
+        .catch();
+      }
+    })
+    .catch();
   }
 }

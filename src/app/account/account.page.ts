@@ -57,6 +57,7 @@ export class AccountPage implements OnInit {
               users[i] = this.user;
               this.storage.set("user", users)
               .then(() => {
+                console.log(users[i]);
               })
               .catch();
             }
