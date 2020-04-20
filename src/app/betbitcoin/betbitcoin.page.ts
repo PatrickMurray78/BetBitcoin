@@ -46,6 +46,7 @@ export class BetbitcoinPage implements OnInit {
   myBet: any;
   choice: number;
   currentBet: number;
+  gotData: boolean = false;
 
   constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController, private vibration: Vibration) {
     this.chartOptions = {
@@ -71,7 +72,7 @@ export class BetbitcoinPage implements OnInit {
     };
    }
 
-  openCustom() {
+  openCustom():void {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
@@ -79,8 +80,8 @@ export class BetbitcoinPage implements OnInit {
   source = interval(1000);
   subscribe = this.source.subscribe(val => this.secondTracker());
 
-  ngOnInit() {
-    document.getElementById("currentBetsContainer").style.opacity = "0";
+  ngOnInit():void {
+    //document.getElementById("currentBetsContainer").style.opacity = "0";
     this.getData();
     this.storage.get("loggedIn")
       .then((data) => {
@@ -92,18 +93,24 @@ export class BetbitcoinPage implements OnInit {
       .catch();
   }
 
-  secondTracker()
+  secondTracker():void
   {
     this.time = new Date().getSeconds();
     this.seconds = 60 - this.time;
     if(this.time % 59 == 0)
     {
-      this.getData();
+      this.gotData = false;
     }
+    if(this.time % 60 == 0 && this.gotData == false)
+    {
+      this.getData();
+      this.gotData = true;
+    }
+    
 
   }
 
-  getData() {
+  getData():void {
     this.service.GetBtcData().subscribe(
       (data) => {
         this.btcData = data;
@@ -113,12 +120,12 @@ export class BetbitcoinPage implements OnInit {
           this.count++;
         }
         else {
-          this.updateSeries(0);
+          this.updateSeries(1);
         }
       }); 
   }
 
-  public updateSeries(mode: number) {
+  public updateSeries(mode: number):void {
     let count = 0;
     var series = [
       { data: [] },
@@ -136,11 +143,10 @@ export class BetbitcoinPage implements OnInit {
     console.log(this.chartOptions.series[0]);
     if(this.choice != null) {
       this.checkBet();
-    }
-    
+    } 
   }
 
-  public generateDayWiseTimeSeries(baseval, count, yrange) {
+  public generateDayWiseTimeSeries(baseval, count, yrange):any {
     var i = 0;
     var series = [];
     while (i < count) {
@@ -154,7 +160,7 @@ export class BetbitcoinPage implements OnInit {
     return series;
   }
 
-  bet(choice:number)
+  bet(choice:number):void
   {
     this.vibration.vibrate(1000);
     this.choice = choice;
@@ -163,7 +169,7 @@ export class BetbitcoinPage implements OnInit {
     document.getElementById("currentBetsContainer").style.opacity = "1";
   }
 
-  checkBet()
+  checkBet():void
   {
     //this.vibration.vibrate([2000, 1000, 2000]);
     if(this.newData[1] < this.newData[4])
@@ -197,7 +203,7 @@ export class BetbitcoinPage implements OnInit {
     
   }
 
-  signOut() {
+  signOut():void {
         this.storage.get("user")
         .then((data) => {
           let users: any = data;

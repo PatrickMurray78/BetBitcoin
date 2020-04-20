@@ -56,9 +56,8 @@ ion-label {
 #betContainer {
     position: absolute;
     left: 35%;
-    //background-color: red;
     width: 30vw;
-    height: 40vh;
+    height: 20vh;
 }
 
 #amount {
@@ -70,10 +69,10 @@ ion-label {
 #currentBetsContainer {
     display: block;
     width: 30vw;
-    height: 40vh;
-    //background-color: saddlebrown;
+    height: 20vh;
+    background-color: saddlebrown;
     float: right;
-    //opacity: 1;
+    opacity: 1;
 }
 
 #bet {
