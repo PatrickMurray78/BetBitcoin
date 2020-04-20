@@ -10,11 +10,23 @@
       <ion-label position="floating">Email</ion-label>
       <ion-input type="Email" value="{{Email}}" formControlName="email" required></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+      Email is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+      Please provide valid email id.
+    </span>
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
       <ion-input type="password" value="{{Email}}" formControlName="password" required></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+      Password is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+      Password must be 8 characters minimum.
+    </span>
 
     <ion-row>
       <ion-col>
