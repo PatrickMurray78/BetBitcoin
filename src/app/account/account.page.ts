@@ -53,6 +53,7 @@ export class AccountPage implements OnInit {
     this.user.email = this.email;
     this.user.password = this.password;
     this.user.dob = this.dob;
+    this.user.dollar = this.balance;
     this.storage.set("loggedIn", this.user)
       .then(() => {
         this.storage.get("user")
@@ -63,6 +64,7 @@ export class AccountPage implements OnInit {
             if(users[i].accountNum == this.accountNum)
             {
               users[i] = this.user;
+              console.log(this.user);
               this.storage.set("user", users)
               .then(() => {
                 console.log(users[i]);
@@ -80,7 +82,8 @@ export class AccountPage implements OnInit {
   }
 
   resetAccount() {
-    this.user.balance = 50000;
+    this.balance = 50000;
+    this.saveChanges();
   }
 
 }
