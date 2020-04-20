@@ -38,10 +38,16 @@
       <ion-label position="floating">Password</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+      Password is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+      Password must be 8 characters minimum.
+    </span>
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" expand="block" [routerLink]="['/home']">Sign Up</ion-button>
+        <ion-button type="submit" expand="block">Sign Up</ion-button>
       </ion-col>
     </ion-row>
   </form>
