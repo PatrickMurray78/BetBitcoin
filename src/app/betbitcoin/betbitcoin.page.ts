@@ -36,10 +36,9 @@ export class BetbitcoinPage implements OnInit {
   time: number;
   btcData: any = [];
   count:number = 0;
-  prevCandle:number;
-  newCandle:number;
   newData: any;
   user: any;
+  accountNum: number;
   name:string;
   balance: number;
   seconds: number;
@@ -88,6 +87,7 @@ export class BetbitcoinPage implements OnInit {
           this.user = data;
           this.name = this.user.name;
           this.balance = this.user.dollar;
+          this.accountNum = this.user.accountNum;
         })
       .catch();
   }
@@ -104,8 +104,6 @@ export class BetbitcoinPage implements OnInit {
   }
 
   getData() {
-    let prevCandle: any;
-    let newCandle: any;
     this.service.GetBtcData().subscribe(
       (data) => {
         this.btcData = data;
@@ -136,7 +134,9 @@ export class BetbitcoinPage implements OnInit {
     }
     this.chartOptions.series = series;
     console.log(this.chartOptions.series[0]);
-    this.checkBet();
+    if(this.choice != null) {
+      this.checkBet();
+    }
     
   }
 
@@ -187,6 +187,7 @@ export class BetbitcoinPage implements OnInit {
         console.log("You lost");
       }
     }
+    this.choice = null;
     document.getElementById("currentBetsContainer").style.opacity = "0";
     this.user.dollar = this.balance;
     this.storage.set("loggedIn", this.user)
@@ -197,9 +198,26 @@ export class BetbitcoinPage implements OnInit {
   }
 
   signOut() {
-    this.user.loggedIn = 0;
-    this.storage.set("loggedIn", this.user)
-      .then((data) => {
+        this.storage.get("user")
+        .then((data) => {
+          let users: any = data;
+          for(let i = 0; i < users.length; i++)
+          {
+            if(users[i].accountNum == this.accountNum)
+            {
+              users[i] = this.user;
+              console.log(this.user);
+              this.storage.set("user", users)
+              .then(() => {
+                console.log(users[i]);
+                this.storage.set("loggedIn", null)
+                .then(() => {
+                })
+                .catch();
+              })
+              .catch();
+            }
+          }
         })
       .catch();
       this.navCtrl.navigateBack('/home');
