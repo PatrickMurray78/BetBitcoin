@@ -96,7 +96,7 @@ export class BetbitcoinPage implements OnInit {
   {
     this.time = new Date().getSeconds();
     this.seconds = 60 - this.time;
-    if(this.time % 61 == 0)
+    if(this.time % 59 == 0)
     {
       this.getData();
     }
@@ -104,21 +104,30 @@ export class BetbitcoinPage implements OnInit {
   }
 
   getData() {
+    let prevCandle: any;
+    let newCandle: any;
     this.service.GetBtcData().subscribe(
       (data) => {
         this.btcData = data;
-        this.updateSeries();
+        if(this.count == 0)
+        {
+          this.updateSeries(1);
+          this.count++;
+        }
+        else {
+          this.updateSeries(0);
+        }
       }); 
   }
 
-  public updateSeries() {
+  public updateSeries(mode: number) {
     let count = 0;
     var series = [
       { data: [] },
     ];
     for(let i = 10; i >= 0; i--)
     {
-      this.newData = this.btcData[i+1];
+      this.newData = this.btcData[i + mode];
       series[0].data[count] = {
         x: new Date(this.newData[0]),
         y: [this.newData[1], this.newData[2], this.newData[3], this.newData[4]]
