@@ -11,6 +11,8 @@ import { NavController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
+  passwordIncorrect = false;
+  emailIncorrect = false;
   users = [];
 
   constructor(public formBuilder: FormBuilder, public storage: Storage, private navCtrl: NavController) { }
@@ -68,9 +70,15 @@ export class LoginPage implements OnInit {
                   this.navCtrl.navigateForward('/betbitcoin');
               
               }
+              else {
+                this.passwordIncorrect = true;
+                console.log("Invalid Password");
+              }
+            }
+            else {
+              this.emailIncorrect = true;
             }
           }
-          
         })
       .catch();
       

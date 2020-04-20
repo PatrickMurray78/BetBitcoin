@@ -8,7 +8,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="Email" value="{{Email}}" formControlName="email" required></ion-input>
+      <ion-input type="Email" value="{{Email}}" formControlName="email" (ionChange)="emailIncorrect = false" required></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
       Email is required.
@@ -16,16 +16,22 @@
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
       Please provide valid email id.
     </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && emailIncorrect">
+     Email not found!
+    </span>
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" value="{{Email}}" formControlName="password" required></ion-input>
+      <ion-input type="password" value="{{Email}}" formControlName="password" (ionChange)="passwordIncorrect = false" required></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
       Password is required.
     </span>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
       Password must be 8 characters minimum.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && passwordIncorrect">
+      Password invalid.
     </span>
 
     <ion-row>
