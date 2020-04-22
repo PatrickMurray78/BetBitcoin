@@ -7,6 +7,9 @@ import { formatDate } from '@angular/common';
 import { NavController } from '@ionic/angular';
 import { Vibration } from '@ionic-native/vibration/ngx';
 
+/**
+ * Import components and interfaces from the ng-apexcharts module.
+ */
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -16,6 +19,9 @@ import {
   ApexTitleSubtitle
 } from "ng-apexcharts";
 
+/**
+ * Exports ChartOptions using values from the ng-apexcharts module
+ */
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -29,7 +35,9 @@ export type ChartOptions = {
   templateUrl: './betbitcoin.page.html',
   styleUrls: ['./betbitcoin.page.scss'],
 })
+
 export class BetbitcoinPage implements OnInit {
+  // Create a view query, using chart as the selector
   @ViewChild("chart", {static: false}) chart:ChartComponent;
   public chartOptions:Partial<ChartOptions>;
 
@@ -49,6 +57,7 @@ export class BetbitcoinPage implements OnInit {
   gotData: boolean = false;
 
   constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController, private vibration: Vibration) {
+    // Initialise ChartOptions
     this.chartOptions = {
       series: [{
         data: []
@@ -70,16 +79,26 @@ export class BetbitcoinPage implements OnInit {
         }
       }
     };
-   }
-
+  }
+  
+  /**
+   * Called once <ion-menu-button> has been clicked.
+   * This enables the side menu and displays it.
+   */
   openCustom():void {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
 
+  // Create a subscription to the secondTracker() function, that is called
+  // every 1000ms.
   source = interval(1000);
   subscribe = this.source.subscribe(val => this.secondTracker());
 
+  /**
+   * When the user logs in, this function fetches the current
+   * chart data, while also fetching the user whho is logged in.
+   */
   ngOnInit():void {
     //document.getElementById("currentBetsContainer").style.opacity = "0";
     this.getData();
@@ -93,45 +112,59 @@ export class BetbitcoinPage implements OnInit {
       .catch();
   }
 
-  secondTracker():void
-  {
+  /**
+   * This function is called every second. It creates a countdown
+   * timer until the minute is up, displaying the next candle.
+   * It also fetches the chart data when a minute passes.
+   */
+  secondTracker():void {
     this.time = new Date().getSeconds();
-    this.seconds = 60 - this.time;
-    if(this.time % 59 == 0)
-    {
+    this.seconds = 60 - this.time; // Countdown timer
+    // Every 59 seconds, set gotData to false
+    if(this.time % 59 == 0) {
       this.gotData = false;
     }
-    if(this.time % 60 == 0 && this.gotData == false)
-    {
+    // Every 60 seconds, when gotData is false. Fetch chart data.
+    if(this.time % 60 == 0 && this.gotData == false) {
       this.getData();
       this.gotData = true;
     }
-    
-
   }
 
+  /**
+   * getData calls the btc service which returns the current chart
+   * data. If this is the first time getData is called, we will fetch 
+   * all the candles except the current one. If it is not the first time
+   * being called. We fetch all the candles including the current one.
+   */
   getData():void {
     this.service.GetBtcData().subscribe(
       (data) => {
         this.btcData = data;
-        if(this.count == 0)
-        {
+        if(this.count == 0) { // First time
           this.updateSeries(1);
           this.count++;
         }
-        else {
-          this.updateSeries(1);
+        else { // n time
+          this.updateSeries(0); 
         }
       }); 
   }
 
+  /**
+   * This function updates the chart depending on the mode passed
+   * as a parameter. Only 11 candles are displayed to the user at 
+   * a time.
+   * 
+   * @param mode - Can either be 0 or 1
+   */
   public updateSeries(mode: number):void {
-    let count = 0;
-    var series = [
+    let count:number = 0;
+    let series:any = [
       { data: [] },
     ];
-    for(let i = 10; i >= 0; i--)
-    {
+    // Iterate through the btcData and create an array
+    for(let i = 10; i >= 0; i--) {
       this.newData = this.btcData[i + mode];
       series[0].data[count] = {
         x: new Date(this.newData[0]),
@@ -139,18 +172,27 @@ export class BetbitcoinPage implements OnInit {
       }
       count++;
     }
+    // Update chart by updating the series
     this.chartOptions.series = series;
-    console.log(this.chartOptions.series[0]);
+    // If the user has made a bet, check it
     if(this.choice != null) {
       this.checkBet();
     } 
   }
 
+  /**
+   * This function was given to me by the ng-apexcharts module.
+   * It updates the series and returns it once called.
+   * 
+   * @param baseval 
+   * @param count 
+   * @param yrange 
+   */
   public generateDayWiseTimeSeries(baseval, count, yrange):any {
-    var i = 0;
-    var series = [];
+    var i:number = 0;
+    var series:any = [];
     while (i < count) {
-      var y =
+      var y:number =
         Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
       series.push([baseval, y]);
@@ -160,8 +202,15 @@ export class BetbitcoinPage implements OnInit {
     return series;
   }
 
-  bet(choice:number):void
-  {
+  /**
+   * Called once user clicks either of the two buttons.
+   * We reduce the users balance by the bet amount and
+   * multiply the bet amount by 2 to create the return
+   * amount if won.
+   * 
+   * @param choice - Green(0) or Red(1)
+   */
+  bet(choice:number):void {
     this.vibration.vibrate(1000);
     this.choice = choice;
     this.balance -= this.amount;
@@ -169,56 +218,55 @@ export class BetbitcoinPage implements OnInit {
     document.getElementById("currentBetsContainer").style.opacity = "1";
   }
 
-  checkBet():void
-  {
+  /**
+   * If the user has made a bet and the countdown is over,
+   * this function checks their bet.If they were correct
+   * their balance is updated and if they lose, they lose the
+   * bet amount.
+   */
+  checkBet():void {
     //this.vibration.vibrate([2000, 1000, 2000]);
-    if(this.newData[1] < this.newData[4])
-    {
-      if(this.choice == 0)
-      {
+    if(this.newData[1] < this.newData[4]) { // Green Candle
+      if(this.choice == 0) { // Winner
         this.amount *= 2;
         this.balance += this.amount;
-      }
-      else {
+      } else { // Loser
         console.log("You lost");
       }
     }
-    else {
-      if(this.choice == 1)
-      {
+    else { // Red Candle
+      if(this.choice == 1) { // Winner
         this.amount *= 2;
         this.balance += this.amount;
-      }
-      else {
+      } else { // Loser
         console.log("You lost");
       }
     }
     this.choice = null;
-    document.getElementById("currentBetsContainer").style.opacity = "0";
+    //document.getElementById("currentBetsContainer").style.opacity = "0";
     this.user.dollar = this.balance;
     this.storage.set("loggedIn", this.user)
-      .then((data) => {
-        })
+      .then()
       .catch();
-    
   }
 
+  /**
+   * Once user clicks sign out in the side menu. The current user
+   * in local storage is updated once the account number has
+   * been found. "loggedIn" in local storage is set to null, as no
+   * users are logged in now and we navigate back to the home page.
+   */
   signOut():void {
         this.storage.get("user")
         .then((data) => {
           let users: any = data;
-          for(let i = 0; i < users.length; i++)
-          {
-            if(users[i].accountNum == this.accountNum)
-            {
+          for(let i = 0; i < users.length; i++) {
+            if(users[i].accountNum == this.accountNum) {
               users[i] = this.user;
-              console.log(this.user);
               this.storage.set("user", users)
               .then(() => {
-                console.log(users[i]);
                 this.storage.set("loggedIn", null)
-                .then(() => {
-                })
+                .then()
                 .catch();
               })
               .catch();
