@@ -220,6 +220,9 @@ export class BetbitcoinPage implements OnInit {
    * @param choice - Green(0) or Red(1)
    */
   bet(choice:number):void {
+    if(this.amount == null) {
+      return;
+    }
     this.vibration.vibrate(1000);
     this.choice = choice;
     this.balance -= this.amount;
@@ -259,6 +262,7 @@ export class BetbitcoinPage implements OnInit {
       .then()
       .catch();
     this.disableBet = false;
+    this.amount = null;
   }
 
   /**

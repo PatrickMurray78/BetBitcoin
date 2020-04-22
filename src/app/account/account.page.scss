@@ -16,7 +16,7 @@ ion-content {
     display: inline-block;
     background-color: white;
     width: 80vw;
-    height: 60vh;
+    height: 50vh;
     margin-top: 5vh;
     border: 2px solid #ff6600;
     border-radius: 25px;
@@ -32,4 +32,8 @@ ion-content {
 ion-input{
     --placeholder-color: black;
     --placeholder-opacity: 1;
+}
+
+.orange {
+    --background: #ff6600;
 }
