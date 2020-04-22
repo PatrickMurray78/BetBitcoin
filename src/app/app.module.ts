@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { Flashlight } from '@ionic-native/flashlight/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { Vibration } from '@ionic-native/vibration/ngx';
     StatusBar,
     SplashScreen,
     Vibration,
+    Flashlight,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

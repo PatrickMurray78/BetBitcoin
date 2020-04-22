@@ -6,6 +6,7 @@ import { interval } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { NavController } from '@ionic/angular';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { Flashlight } from '@ionic-native/flashlight/ngx';
 
 /**
  * Import components and interfaces from the ng-apexcharts module.
@@ -58,7 +59,7 @@ export class BetbitcoinPage implements OnInit {
   disableBet: boolean = false;
   numCandles: number = 10;
 
-  constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController, private vibration: Vibration) {
+  constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController, private vibration: Vibration, private flashlight: Flashlight) {
     // Initialise ChartOptions
     this.chartOptions = {
       series: [{
@@ -238,7 +239,7 @@ export class BetbitcoinPage implements OnInit {
    * bet amount.
    */
   checkBet():void {
-    //this.vibration.vibrate([2000, 1000, 2000]);
+    this.vibration.vibrate([2000, 1000, 2000]);
     if(this.newData[1] < this.newData[4]) { // Green Candle
       if(this.choice == 0) { // Winner
         this.amount *= 2;
@@ -291,4 +292,12 @@ export class BetbitcoinPage implements OnInit {
       .catch();
       this.navCtrl.navigateBack('/home');
   }
+
+  /**
+   * This function toggles the flashlight on the users device if available.
+   */
+  toggleFlashlight():void {
+    this.flashlight.toggle();
+  }
 }
+
