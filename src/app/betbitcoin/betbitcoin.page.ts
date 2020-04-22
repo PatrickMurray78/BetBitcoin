@@ -55,6 +55,8 @@ export class BetbitcoinPage implements OnInit {
   choice: number;
   currentBet: number;
   gotData: boolean = false;
+  disableBet: boolean = false;
+  numCandles: number = 10;
 
   constructor(public storage: Storage, private menu: MenuController, private service: BtcService, private navCtrl: NavController, private vibration: Vibration) {
     // Initialise ChartOptions
@@ -100,7 +102,7 @@ export class BetbitcoinPage implements OnInit {
    * chart data, while also fetching the user whho is logged in.
    */
   ngOnInit():void {
-    //document.getElementById("currentBetsContainer").style.opacity = "0";
+    document.getElementById("bet").style.opacity = "0";
     this.getData();
     this.storage.get("loggedIn")
       .then((data) => {
@@ -164,8 +166,14 @@ export class BetbitcoinPage implements OnInit {
       { data: [] },
     ];
     // Iterate through the btcData and create an array
-    for(let i = 10; i >= 0; i--) {
-      this.newData = this.btcData[i + mode];
+    for(let i = this.numCandles; i >= 0; i--) {
+      if(mode == 0) {
+        this.newData = this.btcData[i];
+      }
+      else {
+        this.newData = this.btcData[i + 1];
+      }
+      
       series[0].data[count] = {
         x: new Date(this.newData[0]),
         y: [this.newData[1], this.newData[2], this.newData[3], this.newData[4]]
@@ -178,6 +186,7 @@ export class BetbitcoinPage implements OnInit {
     if(this.choice != null) {
       this.checkBet();
     } 
+    console.log(this.chartOptions.series);
   }
 
   /**
@@ -215,7 +224,8 @@ export class BetbitcoinPage implements OnInit {
     this.choice = choice;
     this.balance -= this.amount;
     this.currentBet = this.amount * 2;
-    document.getElementById("currentBetsContainer").style.opacity = "1";
+    document.getElementById("bet").style.opacity = "1";
+    this.disableBet = true;
   }
 
   /**
@@ -243,11 +253,12 @@ export class BetbitcoinPage implements OnInit {
       }
     }
     this.choice = null;
-    //document.getElementById("currentBetsContainer").style.opacity = "0";
+    document.getElementById("bet").style.opacity = "0";
     this.user.dollar = this.balance;
     this.storage.set("loggedIn", this.user)
       .then()
       .catch();
+    this.disableBet = false;
   }
 
   /**
