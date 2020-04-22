@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="ionicForm" (ngSubmit)="submitForm(ionicForm.value)" novalidate>
+  <form [formGroup]="signupForm" (ngSubmit)="submitForm(signupForm.value)" novalidate>
     <ion-item lines="full">
       <ion-label position="floating">Name</ion-label>
       <ion-input formControlName="name" type="text" required></ion-input>
