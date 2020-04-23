@@ -149,7 +149,7 @@ export class BetbitcoinPage implements OnInit {
           this.count++;
         }
         else { // n time
-          this.updateSeries(0); 
+          this.updateSeries(1); 
         }
       }); 
   }
