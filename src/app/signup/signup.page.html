@@ -5,42 +5,49 @@
 </ion-header>
 
 <ion-content>
+  <!-- Signup Form -->
   <form [formGroup]="signupForm" (ngSubmit)="submitForm(signupForm.value)" novalidate>
+    <!-- Name -->
     <ion-item lines="full">
       <ion-label position="floating">Name</ion-label>
       <ion-input formControlName="name" type="text" required></ion-input>
     </ion-item>
+    <!-- If form is submitted but no name was entered -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
       Name is required.
     </span>
+    <!-- If form is submitted but name did not meet the minimum length requirement -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
       Name should be min 2 chars long.
     </span>
-
-
+    <!-- Date of Birth -->
     <ion-item lines="full">
       <ion-label position="floating">DOB</ion-label>
       <ion-datetime (ionChange)="getDate($event)" formControlName="dob" [value]="defaultDate"></ion-datetime>
     </ion-item>
-
+    <!-- Email -->
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" type="email" required></ion-input>
     </ion-item>
+    <!-- If form is submitted but no email was entered -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
       Email is required.
     </span>
+    <!-- If form is submitted but email did not meet the required pattern -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
       Please provide valid email id.
     </span>
-
+    <!-- Password -->
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
+    <!-- If form is submitted but no password was entered -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
       Password is required.
     </span>
+    <!-- If form is submitted but password did not meet the minimum length requirement -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
       Password must be 8 characters minimum.
     </span>

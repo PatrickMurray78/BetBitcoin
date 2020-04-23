@@ -5,31 +5,39 @@
 </ion-header>
 
 <ion-content>
+  <!-- Login Form -->
   <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+    <!-- Email -->
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input type="Email" value="{{Email}}" formControlName="email" (ionChange)="emailIncorrect = false" required></ion-input>
     </ion-item>
+    <!-- If form is submitted but no email was entered -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
       Email is required.
     </span>
+    <!-- If form is submitted but email did not meet the required pattern -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
       Please provide valid email id.
     </span>
+    <!-- If form is submitted but email is not found -->
     <span class="error ion-padding" *ngIf="isSubmitted && emailIncorrect">
      Email not found!
     </span>
-
+    <!-- Password -->
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
       <ion-input type="password" value="{{Email}}" formControlName="password" (ionChange)="passwordIncorrect = false" required></ion-input>
     </ion-item>
+    <!-- If form is submitted but no password was entered -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
       Password is required.
     </span>
+    <!-- If form is submitted but password does not meet the minimum length requirement -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
       Password must be 8 characters minimum.
     </span>
+    <!-- If form is submitted but password does not match email -->
     <span class="error ion-padding" *ngIf="isSubmitted && passwordIncorrect">
       Password invalid.
     </span>
